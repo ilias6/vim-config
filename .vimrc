@@ -1,3 +1,6 @@
+""""""""""""""""""""""""""""""
+" => Plugin related
+""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -12,10 +15,17 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/nerdtree'
 Plugin 'voldikss/vim-floaterm' 
+" Plugin 'tc50cal/vim-terminal' 
+" Plugin 'morhetz/gruvbox' 
+Plugin 'joshdick/onedark.vim' 
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'ton/vim-alternate'
+" Plugin 'NLKNguyen/papercolor-theme' 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -43,18 +53,11 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-
-" An example for a vimrc file.
+""""""""""""""""""""""""""""""
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2019 Jan 26
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+""""""""""""""""""""""""""""""
+
+let mapleader = ","
 
 "  When started as "evim", evim.vim will already have done these settings, bail
 " out.
@@ -88,35 +91,84 @@ augroup vimrcEx
 augroup END
 syntax on
 
+""""""""""""""""""""""""""""""
+" => NERDTree related
+""""""""""""""""""""""""""""""
 map <F1> :NERDTree<CR>
 map <F2> :NERDTreeToggle<CR>
-
-" map <A-t> :FloatermNew --height=0.8 --width=0.6 --wintype=float --name=floaterm1 --position=bottomright<CR>
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => Alternate related
+""""""""""""""""""""""""""""""
+nmap <silent> <leader>` :Alternate<CR>
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => CtrlP related
+""""""""""""""""""""""""""""""
+map <leader>f :CtrlP<CR>
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => Syntastic related
+""""""""""""""""""""""""""""""
+" Recommended settings
+" The set commands below are commented because airline does the necessary changes
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => Floaterm related
+""""""""""""""""""""""""""""""
+" map <leader>t :FloatermNew --height=0.8 --width=0.6 --wintype=float --name=floaterm1 --position=bottomright<CR>
 " Remember to add commmands to FloatermNew terminal add --cmd="<command>"
 " map <A-g> :FloatermNew --height=0.8 --width=0.6 --wintype=float --name=floaterm1 --position=bottomright
 
-let g:floaterm_keymap_toggle = '<A-x>'
+let g:floaterm_keymap_toggle = '<leader>m'
+let g:floaterm_keymap_kill = '<leader>M'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.8
 let g:floaterm_position = 'bottomright'
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""
+" => General settings (mostly set commands)
+""""""""""""""""""""""""""""""
 set smarttab
 set fileformats=unix,dos,mac " support all three, in this order
+
+" no vi compat
+set nocompatible
+
 set cindent                             " indent on cinwords
 set expandtab
+set smarttab
 set shiftwidth=4                " set shiftwidth to 4 spaces
 set tabstop=4                   " set tab to 4 spaces
+
 set showmatch                   " Show matching brackets/braces/parantheses.
 set background=dark
 set scrolloff=8
 set number
 set ruler
-set showmatch
 set hid
-set showmatch
 
-" Height of the command bar
-set cmdheight=1
+" Linebreak on 500 characters
+set lbr
+set tw=500
 
 set swapfile
 set dir=~/tmp
@@ -126,7 +178,8 @@ set timeoutlen=750
 
 set cinwords=if,else,while,do,for,switch,case,class,try,catch,private,public   " Which keywords should indent
 
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+" Height of the command bar
+set cmdheight=1 
 
 " Turn on the Wild menu
 set wildmenu
@@ -138,17 +191,45 @@ if has("win16") || has("win32")
 else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
 
-let mapleader = ","
+""""""""""""""""""""""""""""""
+" => colorscheme
+""""""""""""""""""""""""""""""
+
+set background=dark
+try
+    colorscheme onedark 
+catch
+endtry
+
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""
+" => quick commands 
+""""""""""""""""""""""""""""""
+" command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
 " quick save
 nmap <leader>w :w!<cr>
 " quick exit
 nmap <leader>q :q<cr>
+nmap <leader>! :q!<cr>
 " quick hide highlighted
-map <leader>h :noh<CR>
+map <leader>h :noh<CR> 
 " highlight Search ctermfg=black
 " highlight Search ctermbg=green
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""
+" => When searching, the highlighted words blink for each n/N
+""""""""""""""""""""""""""""""
 nnoremap <silent> n n:call HLNext(0.1) <cr>
 nnoremap <silent> N N:call HLNext(0.1) <cr>
 function! HLNext (blinktime)
@@ -159,6 +240,9 @@ function! HLNext (blinktime)
   call matchdelete(ring)
   redraw
 endfunction
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
 
 " Add optional packages.
 "
@@ -169,3 +253,14 @@ endfunction
 if has('syntax') && has('eval')
   packadd! matchit
 endif
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
