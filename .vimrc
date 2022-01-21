@@ -1,28 +1,49 @@
 """"""""""""""""""""""""""""""
+
 " => Plugin related
 """"""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" Plugin 'powerline/powerline'
 Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
 Plugin 'voldikss/vim-floaterm' 
 " Plugin 'tc50cal/vim-terminal' 
 " Plugin 'morhetz/gruvbox' 
-Plugin 'joshdick/onedark.vim' 
-Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'ton/vim-alternate'
 " Plugin 'NLKNguyen/papercolor-theme' 
+Plugin 'joshdick/onedark.vim' 
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'tpope/vim-fugitive'
+ 
+Plugin 'tpope/vim-surround' 
+Plugin 'Valloric/YouCompleteMe' 
+Plugin 'Raimondi/delimitMate'
+" " debugger
+Plugin 'puremourning/vimspector'
+
+Plugin 'dense-analysis/ale'
+" Plugin 'vim-syntastic/syntastic'
+" " C++ Plugins:
+Plugin 'ton/vim-alternate'
+Plugin 'LucHermitte/vim-refactor' 
+" " these are required for vim-refactor
+Plugin 'LucHermitte/lh-vim-lib' 
+Plugin 'LucHermitte/lh-dev' 
+" Plugin 'LucHermitte/lh-brackets' 
+Plugin 'LucHermitte/lh-style' 
+Plugin 'LucHermitte/lh-tags' 
+" " For jupyter notebook:
+Plugin 'goerz/jupytext.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -100,6 +121,23 @@ map <F2> :NERDTreeToggle<CR>
 "
 """"""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""
+" => vimspector related
+""""""""""""""""""""""""""""""
+nnoremap <Leader>dd :call vimspector#Launch()<CR>
+nnoremap <Leader>de :call vimspector#Reset()<CR>
+nnoremap <Leader>dc :call vimspector#Continue()<CR>
+
+nnoremap <Leader>dt :call vimspector#ToggleBreakpoint()<CR>
+nnoremap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+
+nmap <Leader>dk <Plug>VimspectorRestart
+nmap <Leader>dh <Plug>VimspectorStepOut
+nmap <Leader>dl <Plug>VimspectorStepInto
+nmap <Leader>dj <Plug>VimspectorStepOver
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
 " => Alternate related
 """"""""""""""""""""""""""""""
 nmap <silent> <leader>` :Alternate<CR>
@@ -107,36 +145,93 @@ nmap <silent> <leader>` :Alternate<CR>
 "
 """"""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""
+" => Indent-Guides related
+""""""""""""""""""""""""""""""
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_guide_size = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=61
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=97
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
 " => CtrlP related
 """"""""""""""""""""""""""""""
 map <leader>f :CtrlP<CR>
+let g:ctrlp_show_hidden=1
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => Fzf related
+""""""""""""""""""""""""""""""
+" This is the default option:
+"   - Preview window on the right with 50% width
+"   - CTRL-/ will toggle preview window.
+" - Note that this array is passed as arguments to fzf#vim#with_preview function.
+" - To learn more about preview window options, see `--preview-window` section of `man fzf`.
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
+
+" Preview window on the upper side of the window with 40% height,
+" hidden by default, ctrl-/ to toggle
+" let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+
+" Empty value to disable preview window altogether
+" let g:fzf_preview_window = []
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+""""""""""""""""""""""""""""""
+"
+""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
+" => airline related
+""""""""""""""""""""""""""""""
+" the separator used on the left side
+" let g:airline_left_sep=''
+" the separator used on the right side 
+" let g:airline_right_sep=''
 """"""""""""""""""""""""""""""
 "
 """"""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""
 " => Syntastic related
 """"""""""""""""""""""""""""""
-" Recommended settings
-" The set commands below are commented because airline does the necessary changes
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
 """"""""""""""""""""""""""""""
 "
 """"""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""
 " => Floaterm related
 """"""""""""""""""""""""""""""
-" map <leader>t :FloatermNew --height=0.8 --width=0.6 --wintype=float --name=floaterm1 --position=bottomright<CR>
+" map <leader>t :FloatermNew --height=0.8 --width=0.6 --wintype=float --position=bottomright --name=
+
 " Remember to add commmands to FloatermNew terminal add --cmd="<command>"
 " map <A-g> :FloatermNew --height=0.8 --width=0.6 --wintype=float --name=floaterm1 --position=bottomright
 
 let g:floaterm_keymap_toggle = '<leader>m'
+let g:floaterm_keymap_next = '<leader>tn'
+let g:floaterm_keymap_prev= '<leader>tp'
 let g:floaterm_keymap_kill = '<leader>M'
+let g:floaterm_keymap_new = '<leader>tt'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.8
 let g:floaterm_position = 'bottomright'
@@ -160,7 +255,6 @@ set shiftwidth=4                " set shiftwidth to 4 spaces
 set tabstop=4                   " set tab to 4 spaces
 
 set showmatch                   " Show matching brackets/braces/parantheses.
-set background=dark
 set scrolloff=8
 set number
 set ruler
@@ -171,10 +265,15 @@ set lbr
 set tw=500
 
 set swapfile
-set dir=~/tmp
+set backup
+set undofile
+set backupdir=".backup/, ~/.backup/, /tmp//"
+set directory=".swp/, ~/.swp/, /tmp//"
+set undodir=".undo/, ~/.undo/, /tmp//"
 
 " Set timeout length to 500 ms
-set timeoutlen=750 
+set timeoutlen=600 
+set ttimeoutlen=0 
 
 set cinwords=if,else,while,do,for,switch,case,class,try,catch,private,public   " Which keywords should indent
 
