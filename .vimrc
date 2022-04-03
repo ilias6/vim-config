@@ -18,6 +18,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf'
 Plugin 'voldikss/vim-floaterm' 
+Plugin 'tpope/vim-abolish' 
+Plugin 'kana/vim-arpeggio' 
 " Plugin 'tc50cal/vim-terminal' 
 " Plugin 'morhetz/gruvbox' 
 " Plugin 'NLKNguyen/papercolor-theme' 
@@ -26,6 +28,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tpope/vim-fugitive'
  
 Plugin 'tpope/vim-surround' 
+Plugin 'tpope/vim-repeat'
 Plugin 'Valloric/YouCompleteMe' 
 Plugin 'Raimondi/delimitMate'
 " " debugger
@@ -33,6 +36,9 @@ Plugin 'puremourning/vimspector'
 
 Plugin 'dense-analysis/ale'
 " Plugin 'vim-syntastic/syntastic'
+" " Nodejs Plugins:
+autocmd FileType javascript set formatprg=prettier\ --stdin
+Plugin 'neoclide/coc.nvim'
 " " C++ Plugins:
 Plugin 'ton/vim-alternate'
 Plugin 'LucHermitte/vim-refactor' 
@@ -251,8 +257,8 @@ set nocompatible
 set cindent                             " indent on cinwords
 set expandtab
 set smarttab
-set shiftwidth=4                " set shiftwidth to 4 spaces
-set tabstop=4                   " set tab to 4 spaces
+set shiftwidth=2               " set shiftwidth to 4 spaces
+set tabstop=2                  " set tab to 4 spaces
 
 set showmatch                   " Show matching brackets/braces/parantheses.
 set scrolloff=8
@@ -317,9 +323,16 @@ endtry
 nmap <leader>w :w!<cr>
 " quick exit
 nmap <leader>q :q<cr>
+nmap <leader>wq :wq!<cr>
 nmap <leader>! :q!<cr>
 " quick hide highlighted
-map <leader>h :noh<CR> 
+nmap <leader>h :noh<CR> 
+" quick swap between windows
+" Arpeggio nmap <leader>ee :<C-w><C-w> 
+call arpeggio#map('n', '', 0, 'we', '<C-w><C-w>')
+call arpeggio#map('i', '', 0, 'we', '<Esc><C-w><C-w>')
+" jk -> Esc
+call arpeggio#map('i', '', 0, 'jk', '<Esc>')
 " highlight Search ctermfg=black
 " highlight Search ctermbg=green
 """"""""""""""""""""""""""""""
