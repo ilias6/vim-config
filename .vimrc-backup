@@ -329,8 +329,8 @@ nmap <leader>! :q!<cr>
 nmap <leader>h :noh<CR> 
 " quick swap between windows
 " Arpeggio nmap <leader>ee :<C-w><C-w> 
-call arpeggio#map('n', '', 0, 'we', '<C-w>w')
-call arpeggio#map('i', '', 0, 'we', '<Esc><C-w>w')
+call arpeggio#map('n', '', 0, 'we', '<C-w><C-w>')
+call arpeggio#map('i', '', 0, 'we', '<Esc><C-w><C-w>')
 " jk -> Esc
 call arpeggio#map('i', '', 0, 'jk', '<Esc>')
 " highlight Search ctermfg=black
