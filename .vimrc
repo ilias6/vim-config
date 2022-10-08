@@ -38,7 +38,7 @@ Plugin 'dense-analysis/ale'
 " Plugin 'vim-syntastic/syntastic'
 " " Nodejs Plugins:
 autocmd FileType javascript set formatprg=prettier\ --stdin
-Plugin 'neoclide/coc.nvim'
+" Plugin 'neoclide/coc.nvim'
 " " C++ Plugins:
 Plugin 'ton/vim-alternate'
 Plugin 'LucHermitte/vim-refactor' 
@@ -248,6 +248,11 @@ let g:floaterm_position = 'bottomright'
 """"""""""""""""""""""""""""""
 " => General settings (mostly set commands)
 """"""""""""""""""""""""""""""
+" zo(open) - zc(close) - zm(incr) - zr(decr)
+set foldmethod=indent
+set foldlevel=1
+set foldclose=all
+
 set smarttab
 set fileformats=unix,dos,mac " support all three, in this order
 
