@@ -12,7 +12,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'powerline/powerline'
-Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline'
+Plugin 'itchyny/lightline.vim'
+Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'junegunn/fzf.vim'
@@ -252,6 +254,10 @@ let g:floaterm_position = 'bottomright'
 set foldmethod=indent
 set foldlevel=1
 set foldclose=all
+
+
+set list
+set lcs+=space:·
 
 set smarttab
 set fileformats=unix,dos,mac " support all three, in this order
